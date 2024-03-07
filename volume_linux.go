@@ -131,7 +131,7 @@ func parseRXMuted(out string) (bool, error) {
 func muteCmd(outputdevice string) []string {
 	if useAmixer {
 		return []string{"amixer", "set", outputdevice, "mute"}
-	} else if _, err := strconv.Atoi(outputdevice); err == nil {
+	} else {
 		return []string{"pactl", "set-sink-mute", outputdevice, "1"}
 	}
 	return []string{"pactl", "set-sink-mute", "0", "1"}
