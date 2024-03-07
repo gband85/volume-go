@@ -76,23 +76,25 @@ func setVolumeCmd(volume int, outputdevice string) []string {
 func increaseVolumeCmd(diff int, outputdevice string) []string {
 	var OrigVolume int
 	var err error
+	var sign string
 	OrigVolume, err = GetVolume(outputdevice)
 	if err != nil {
 		log.Println("error: Cannot Get Volume of Current Output Device")
 		return nil
 	}
 
-	if diff > 0 {
-		log.Printf("debug: Changing Volume From %v increase by %v dB step on %v\n", OrigVolume, diff, outputdevice)
-		return []string{"amixer", "sset", "-q", outputdevice, strconv.Itoa(abs(diff)) + "db+"}
+	if diff >= 0 {
+		sign = "+"
+	} else if useAmixer {
+		diff = -diff
+		sign = "-"
 	}
-
-	if diff < 0 {
-		log.Printf("debug: Changing Volume From %v decrease by %v dB step on %v\n", OrigVolume, diff, outputdevice)
-		return []string{"amixer", "sset", "-q", outputdevice, strconv.Itoa(abs(diff)) + "db-"}
+	if useAmixer {
+		log.Printf("debug: Changing Volume From %v to %v %% on %v\n", OrigVolume, OrigVolume+diff, outputdevice)
+		return []string{"amixer", "set", outputdevice, strconv.Itoa(diff) + "%" + sign}
 	}
-
-	return nil
+	log.Printf("debug: Changing Volume From %v to %v %% on %v\n", OrigVolume, OrigVolume+diff, outputdevice)
+	return []string{"pactl", "set-sink-volume", outputdevice, sign + strconv.Itoa(diff) + "%"}
 }
 
 func getMutedCmd(outputdevice string) []string {
