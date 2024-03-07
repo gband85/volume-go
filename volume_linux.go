@@ -35,7 +35,7 @@ func getVolumeCmd(outputdevice string) []string {
 	if useAmixer {
 		return []string{"amixer", "-M", "get", outputdevice}
 	}
-	return []string{"pactl", "list", "sinks"}
+	return []string{"pactl", "get-sink-volume", outputdevice}
 }
 
 var volumePattern = regexp.MustCompile(`\d+%`)
