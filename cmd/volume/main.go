@@ -12,11 +12,16 @@ import (
 	"time"
 )
 
+var name = "volume"
+var version = "v0.1.0"
+var description = "control audio volume"
+var author = "gband85"
+
 var volumePattern = regexp.MustCompile(`\d+%`)
 var useAmixer bool = true
 
-//Example For CM108 (USB Sound Card)
-var OutputVolDevice string ="Headphone"
+// Example For CM108 (USB Sound Card)
+var OutputVolDevice string = "Headphone"
 var OutputMuteDevice string = "Headphone"
 var OutputVolRegex string = "Playback"
 
@@ -24,7 +29,6 @@ var OutputVolRegex string = "Playback"
 //var OutputVolDevice string ="Speaker"
 //var OutputMuteDevice string = "Right Output Mixer PCM"
 //var OutputVolRegex string = "Front Left:"
-
 
 func main() {
 
@@ -151,4 +155,3 @@ func unmuteCmd(outputdevice string) []string {
 	}
 	return []string{"pactl", "set-sink-mute", "0", "0"}
 }
-
