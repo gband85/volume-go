@@ -70,7 +70,7 @@ func setVolumeCmd(volume int, outputdevice string) []string {
 	} else if _, err := strconv.Atoi(outputdevice); err == nil {
 		return []string{"pactl", "set-sink-volume", outputdevice, strconv.Itoa(volume) + "%"}
 	}
-	return []string{"pactl", "set-sink-volume", "0", strconv.Itoa(volume) + "%"}
+	return []string{"pactl", "set-sink-volume", outputdevice, strconv.Itoa(volume) + "%"}
 }
 
 func increaseVolumeCmd(diff int, outputdevice string) []string {
