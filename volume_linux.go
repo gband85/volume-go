@@ -101,7 +101,7 @@ func getMutedCmd(outputdevice string) []string {
 	if useAmixer {
 		return []string{"amixer", "sget", outputdevice}
 	}
-	return []string{"pactl", "list", "sinks"}
+	return []string{"pactl", "get-sink-mute", outputdevice}
 }
 
 func parseRXMuted(out string) (bool, error) {
