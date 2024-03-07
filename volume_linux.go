@@ -17,8 +17,8 @@ var (
 )
 
 const (
-//	outputdevice string = "Master"
-//	outputdevice string = "Speaker" // Modified from Master to Speaker for talkkonnect for raspberry pi
+// outputdevice string = "Master"
+// outputdevice string = "Speaker" // Modified from Master to Speaker for talkkonnect for raspberry pi
 )
 
 func init() {
@@ -134,16 +134,14 @@ func muteCmd(outputdevice string) []string {
 	} else {
 		return []string{"pactl", "set-sink-mute", outputdevice, "1"}
 	}
-	return []string{"pactl", "set-sink-mute", "0", "1"}
 }
 
 func unmuteCmd(outputdevice string) []string {
 	if useAmixer {
 		return []string{"amixer", "set", outputdevice, "unmute"}
-	} else if _, err := strconv.Atoi(outputdevice); err == nil {
+	} else {
 		return []string{"pactl", "set-sink-mute", outputdevice, "0"}
 	}
-	return []string{"pactl", "set-sink-mute", "0", "0"}
 }
 
 func abs(x int) int {
